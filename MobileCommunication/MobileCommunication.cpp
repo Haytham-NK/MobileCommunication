@@ -199,7 +199,7 @@ public:
 	void sortTariffsByPrice() // Отсортировать по цене тарифы
 	{
 		sort(tariffs.begin(), tariffs.end(), [](Tariff* firstTariff, Tariff* secondTariff) {
-			return firstTariff->display() < secondTariff->display();
+			return firstTariff->displayPrice() < secondTariff->displayPrice();
 			});
 	}
 
@@ -242,22 +242,37 @@ void displayMenu() { // Вывод меню
 int main()
 {
 	Company company;
-	setlocale(LC_ALL, "ru");
+	setlocale(0, "");
 	int choice = 0;
-
+	string checkChoice;
 	// Регулярные функции для проверки введённых данных
 	regex phoneRegex(R"(\+7 \(\d{3}\) \d{3}-\d{4})");
 	regex discountRegex("^(100|[0-9]{1,3})$");
-	regex nameRegex("^[A-Za-zА-ЯЁа-яё]{2,30}$");
+	regex nameRegex("^[^0-9]{2,30}$");
 	regex indexRegex("[0-9]{1,5}$");
 	regex priceRegex("^(100000|[0-9]{1,5})$");
+	regex choiceRegex("^(?:[1-9]|10)$");
 
 	displayMenu();
 
 	while (choice != 10)
 	{
-		std::cout << "\nВведите номер операции: ";
-		cin >> choice;
+
+		while (true)
+		{
+			cout << "\nВведите номер операции: ";
+			cin >> checkChoice;
+
+			if (regex_match(checkChoice, choiceRegex))
+			{
+				choice = stoi(checkChoice);
+				break;
+			}
+			else
+			{
+				cout << "Введите число от 1 до 10.\n";
+			}
+		}
 		// пользователю предлагается ввести номер операции
 		switch (choice) 
 		{
