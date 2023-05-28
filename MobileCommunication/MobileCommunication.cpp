@@ -186,12 +186,12 @@ public:
 		}
 	}
 
-	size_t getTotalClientsCount() const // Вывести количество клиентов
+	int getTotalClientsCount() const // Вывести количество клиентов
 	{
 		return clients.size();
 	}
 
-	size_t getTotalTariffsCount() // Вывести количество тарифов
+	int getTotalTariffsCount() // Вывести количество тарифов
 	{
 		return tariffs.size();
 	}
