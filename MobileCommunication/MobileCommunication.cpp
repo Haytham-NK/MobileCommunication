@@ -242,15 +242,15 @@ void displayMenu() { // Вывод меню
 int main()
 {
 	Company company;
-	setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "ru");
 	int choice = 0;
 
 	// Регулярные функции для проверки введённых данных
 	regex phoneRegex(R"(\+7 \(\d{3}\) \d{3}-\d{4})");
-	regex discountRegex(R"(\b(?:100|\d{1,2})\b)");
-	regex nameRegex("^[A-Za-zА-Яа-я ]{2,30}$");
+	regex discountRegex("^(100|[0-9]{1,3})$");
+	regex nameRegex("^[A-Za-zА-ЯЁа-яё]{2,30}$");
 	regex indexRegex("[0-9]{1,5}$");
-	regex priceRegex(R"(\d+)");
+	regex priceRegex("^(100000|[0-9]{1,5})$");
 
 	displayMenu();
 
@@ -281,10 +281,11 @@ int main()
 
 					string name;
 					string checkPrice;
+					string checkDiscount;
+					string unlimitedService;
 					int price;
 					
 					if (tariffType == 1) {
-						string unlimitedService;
 						while (true)
 						{
 							cout << "Введите название тарифа: ";
@@ -339,17 +340,15 @@ int main()
 					}
 					else if (tariffType == 3) {
 						int discount;
-						string checkDiscount;
 						while (true)
 						{
 							cout << "Введите название тарифа: ";
 							cin.ignore();
 							getline(cin, name);
 							cout << "Введите цену тарифа: ";
-							cin >> price;
+							cin >> checkPrice;
 							cout << "Введите скидку (%): ";
-							cin >> discount;
-
+							cin >> checkDiscount;
 							if (regex_match(name, nameRegex) && regex_match(checkPrice, priceRegex) && regex_match(checkDiscount, discountRegex))
 							{
 								price = stoi(checkPrice);
@@ -369,6 +368,7 @@ int main()
 						cout << "Неверный выбор типа тарифа.\n";
 					}
 				}
+				cout << "Тариф успешно создан.\n";
 				break;
 			}
 			case 3: // Удаление тарифа
