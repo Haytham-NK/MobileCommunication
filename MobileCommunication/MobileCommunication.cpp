@@ -3,8 +3,10 @@
 #include <vector>
 #include <regex>
 #include <algorithm>
+#include <Windows.h>
 
 using namespace std;
+
 
 //Базовый класс тариф
 class Tariff
@@ -242,7 +244,10 @@ void displayMenu() { // Вывод меню
 int main()
 {
 	Company company;
-	setlocale(0, "");
+	
+	SetConsoleCP(1251); // Установка кодировки
+	SetConsoleOutputCP(1251);
+
 	int choice = 0;
 	string checkChoice;
 	// Регулярные функции для проверки введённых данных
@@ -304,13 +309,13 @@ int main()
 						while (true)
 						{
 							cout << "Введите название тарифа: ";
-							cin.ignore(); // игнорирование символа
-							getline(cin, name); // ввод данных
+							//getline(cin, name); // ввод данных
+							cin >> name;
 							cout << "Введите цену тарифа: ";
 							cin >> checkPrice;
 							cout << "Введите безлимитные услуги: ";
-							cin.ignore();
-							getline(cin, unlimitedService);
+							//getline(cin, unlimitedService);
+							cin >> unlimitedService;
 							// проверка на правильность введённых данных
 							if (regex_match(name, nameRegex) && regex_match(checkPrice, priceRegex) && regex_match(unlimitedService, nameRegex))
 							{
@@ -577,6 +582,9 @@ int main()
 				break;
 			}
 		}
+
+		cout << endl;
+		displayMenu();
 	}
 
 	return 0;
