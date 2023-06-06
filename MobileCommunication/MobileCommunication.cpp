@@ -253,7 +253,7 @@ int main()
 	// Регулярные функции для проверки введённых данных
 	regex phoneRegex(R"(\+7 \(\d{3}\) \d{3}-\d{4})");
 	regex discountRegex("^(100|[0-9]{1,3})$");
-	regex nameRegex("^[^0-9]{2,30}$");
+	regex nameRegex("[^0-9]{2,100}$");
 	regex indexRegex("[0-9]{1,5}$");
 	regex priceRegex("^(100000|[0-9]{1,5})$");
 	regex choiceRegex("^(?:[1-9]|10)$");
@@ -531,7 +531,16 @@ int main()
 			}
 			case 7: // Вывод количества клиентов
 			{
-				cout << "Общая численность клиентов равна " + company.getTotalClientsCount() << endl;
+				cout << "Общая численность клиентов равна ";
+
+				if (company.getTotalClientsCount() == 0)
+				{
+					cout << 0 << endl;
+				}
+				else
+				{
+					cout << company.getTotalClientsCount() << endl;
+				}
 				break;
 			}
 			case 8: // Сортировка тарифов по цене
